@@ -3,6 +3,8 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { db } from "./db"
 import { accounts, sessions, users, verificationTokens } from "./db/schema"
+import bcrypt from "bcryptjs"
+import { eq } from "drizzle-orm"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db, {
@@ -19,10 +21,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (credentials?.email === "test@example.com" && credentials?.password === "password") {
-          return { id: "1", name: "Test User", email: "test@example.com", role: "Admin" }
-        }
-        return null
+        if (!credentials?.email || !credentials?.password) return null;
+
+        const [user] = await db.select().from(users).where(eq(users.email, credentials.email as string)).limit(1);
+
+        if (!user || !user.password) return null;
+
+        const isPasswordValid = await bcrypt.compare(credentials.password as string, user.password);
+
+        if (!isPasswordValid) return null;
+
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        };
       }
     })
   ],

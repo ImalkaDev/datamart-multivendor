@@ -1,5 +1,17 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Architecture Notes
+
+### Roles and Auth
+Users in DataMart are assigned a role (`Buyer`, `Vendor`, or `Admin`) stored in the `users` database table. NextAuth has been configured to pass this role through JWT tokens into the NextAuth `session.user` object for strict server-side rendering checks on protected routes (like `/admin`).
+
+### Datasets and Moderation
+Datasets are submitted by Vendors and begin with a `PENDING` status.
+Admins can review these on the `/admin/moderation` page and use server actions to update their status to `APPROVED` or `REJECTED`.
+
+### Global Settings (SEO)
+Admins have access to `/admin/seo` where they can store dynamic global application settings such as meta titles and descriptions in the `settings` database table.
+
 ## Getting Started
 
 First, run the development server:

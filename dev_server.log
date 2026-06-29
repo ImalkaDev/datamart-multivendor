@@ -1,0 +1,120 @@
+
+> temp_app@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+✓ Ready in 578ms
+
+○ Compiling / ...
+ GET / 200 in 5.0s (next.js: 4.6s, application-code: 353ms)
+[browser] Image with src "http://localhost:3000/vercel.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+ GET / 200 in 84ms (next.js: 6ms, application-code: 78ms)
+[browser] Image with src "http://localhost:3000/vercel.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+ GET / 200 in 69ms (next.js: 4ms, application-code: 65ms)
+[browser] Image with src "http://localhost:3000/vercel.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+✓ Compiled in 373ms
+React does not recognize the `asChild` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `aschild` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+ GET / 200 in 335ms (next.js: 137ms, application-code: 198ms)
+[browser] React does not recognize the `asChild` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `aschild` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+ GET /login 200 in 2.3s (next.js: 2.2s, application-code: 67ms)
+ GET /register 200 in 939ms (next.js: 873ms, application-code: 66ms)
+⨯ ./src/app/login/page.tsx:17:1
+Module not found: Can't resolve 'next-auth/react'
+  [90m15 |[0m } [36mfrom[0m [32m"@/components/ui/form"[0m
+  [90m16 |[0m [36mimport[0m { [33mInput[0m } [36mfrom[0m [32m"@/components/ui/input"[0m
+[31m[1m>[0m [90m17 |[0m [36mimport[0m { signIn } [36mfrom[0m [32m"next-auth/react"[0m
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m18 |[0m [36mimport[0m [33mLink[0m [36mfrom[0m [32m"next/link"[0m
+  [90m19 |[0m
+  [90m20 |[0m [36mconst[0m formSchema = z.object({
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/login/page.tsx [Client Component Browser]
+    ./src/app/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/login/page.tsx [Client Component SSR]
+    ./src/app/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/login/page.tsx:17:1
+Module not found: Can't resolve 'next-auth/react'
+  [90m15 |[0m } [36mfrom[0m [32m"@/components/ui/form"[0m
+  [90m16 |[0m [36mimport[0m { [33mInput[0m } [36mfrom[0m [32m"@/components/ui/input"[0m
+[31m[1m>[0m [90m17 |[0m [36mimport[0m { signIn } [36mfrom[0m [32m"next-auth/react"[0m
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m18 |[0m [36mimport[0m [33mLink[0m [36mfrom[0m [32m"next/link"[0m
+  [90m19 |[0m
+  [90m20 |[0m [36mconst[0m formSchema = z.object({
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/login/page.tsx [Client Component Browser]
+    ./src/app/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/login/page.tsx [Client Component SSR]
+    ./src/app/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/login/page.tsx:17:1
+Module not found: Can't resolve 'next-auth/react'
+  [90m15 |[0m } [36mfrom[0m [32m"@/components/ui/form"[0m
+  [90m16 |[0m [36mimport[0m { [33mInput[0m } [36mfrom[0m [32m"@/components/ui/input"[0m
+[31m[1m>[0m [90m17 |[0m [36mimport[0m { signIn } [36mfrom[0m [32m"next-auth/react"[0m
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m18 |[0m [36mimport[0m [33mLink[0m [36mfrom[0m [32m"next/link"[0m
+  [90m19 |[0m
+  [90m20 |[0m [36mconst[0m formSchema = z.object({
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/login/page.tsx [Client Component Browser]
+    ./src/app/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/login/page.tsx [Client Component SSR]
+    ./src/app/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/login/page.tsx:17:1
+Module not found: Can't resolve 'next-auth/react'
+  [90m15 |[0m } [36mfrom[0m [32m"@/components/ui/form"[0m
+  [90m16 |[0m [36mimport[0m { [33mInput[0m } [36mfrom[0m [32m"@/components/ui/input"[0m
+[31m[1m>[0m [90m17 |[0m [36mimport[0m { signIn } [36mfrom[0m [32m"next-auth/react"[0m
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m18 |[0m [36mimport[0m [33mLink[0m [36mfrom[0m [32m"next/link"[0m
+  [90m19 |[0m
+  [90m20 |[0m [36mconst[0m formSchema = z.object({
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/app/login/page.tsx [Client Component Browser]
+    ./src/app/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/login/page.tsx [Client Component SSR]
+    ./src/app/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+✓ Compiled in 123ms
+✓ Compiled in 373ms

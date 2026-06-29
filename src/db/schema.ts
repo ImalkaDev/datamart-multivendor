@@ -6,6 +6,7 @@ import {
   integer,
   pgEnum,
 } from "drizzle-orm/pg-core"
+import { relations } from "drizzle-orm"
 import type { AdapterAccountType } from "next-auth/adapters"
 
 export const roleEnum = pgEnum("role", ["Buyer", "Vendor", "Admin"])
@@ -87,3 +88,34 @@ export const authenticators = pgTable(
     }),
   ]
 )
+
+
+export const datasetStatusEnum = pgEnum("dataset_status", ["PENDING", "APPROVED", "REJECTED"])
+
+export const datasets = pgTable("dataset", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  price: integer("price").notNull().default(0),
+  category: text("category").notNull(),
+  fileUrl: text("file_url").notNull(),
+  vendorId: text("vendor_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  status: datasetStatusEnum("status").default("PENDING").notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+})
+
+export const usersRelations = relations(users, ({ many }) => ({
+  datasets: many(datasets),
+}))
+
+export const datasetsRelations = relations(datasets, ({ one }) => ({
+  vendor: one(users, {
+    fields: [datasets.vendorId],
+    references: [users.id],
+  }),
+}))

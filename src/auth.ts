@@ -20,7 +20,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
       async authorize(credentials) {
         if (credentials?.email === "test@example.com" && credentials?.password === "password") {
-          return { id: "1", name: "Test User", email: "test@example.com" }
+          return { id: "1", name: "Test User", email: "test@example.com", role: "Admin" }
         }
         return null
       }
@@ -28,6 +28,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   session: {
     strategy: "jwt"
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = user.role
+        token.id = user.id
+      }
+      return token
+    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        session.user.role = token.role as "Buyer" | "Vendor" | "Admin"
+        session.user.id = token.id as string
+      }
+      return session
+    }
   },
   pages: {
     signIn: "/login",

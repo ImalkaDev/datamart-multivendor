@@ -9,6 +9,7 @@ import {
 import type { AdapterAccountType } from "next-auth/adapters"
 
 export const roleEnum = pgEnum("role", ["Buyer", "Vendor", "Admin"])
+export const datasetStatusEnum = pgEnum("dataset_status", ["PENDING", "APPROVED", "REJECTED"])
 
 export const users = pgTable("user", {
   id: text("id")
@@ -44,6 +45,29 @@ export const accounts = pgTable(
     }),
   ]
 )
+
+export const datasets = pgTable("dataset", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  title: text("title").notNull(),
+  description: text("description"),
+  vendorId: text("vendorId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  status: datasetStatusEnum("status").default("PENDING").notNull(),
+  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow().notNull(),
+})
+
+export const settings = pgTable("setting", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  key: text("key").unique().notNull(),
+  value: text("value").notNull(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow().notNull(),
+})
 
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").primaryKey(),

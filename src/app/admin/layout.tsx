@@ -41,6 +41,12 @@ export default async function AdminLayout({
           >
             SEO Settings
           </Link>
+          <Link
+            href="/admin/reviews"
+            className="block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+          >
+            Reviews
+          </Link>
         </nav>
         <div className="p-4 mt-auto border-t border-gray-200 lg:absolute lg:bottom-0 lg:w-64">
            <form action={async () => {

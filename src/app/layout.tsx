@@ -54,7 +54,7 @@ export default async function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-gradient-to-br from-slate-50 to-slate-100 text-slate-900 selection:bg-primary/20">
         {userCount === 0 && (
           <div className="bg-blue-600 text-white text-center py-2 px-4 sticky top-0 z-50">
             Welcome to your new site! Please{" "}

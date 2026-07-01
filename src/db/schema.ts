@@ -6,6 +6,7 @@ import {
   integer,
   pgEnum,
 } from "drizzle-orm/pg-core"
+import { relations } from "drizzle-orm"
 import type { AdapterAccountType } from "next-auth/adapters"
 
 export const roleEnum = pgEnum("role", ["Buyer", "Vendor", "Admin"])
@@ -19,6 +20,7 @@ export const users = pgTable("user", {
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
   email: text("email").unique(),
+  password: text("password"),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   role: roleEnum("role").default("Buyer").notNull(),
@@ -64,20 +66,6 @@ export const accounts = pgTable(
     }),
   ]
 )
-
-export const datasets = pgTable("dataset", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  title: text("title").notNull(),
-  description: text("description"),
-  vendorId: text("vendorId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  status: datasetStatusEnum("status").default("PENDING").notNull(),
-  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow().notNull(),
-})
 
 export const settings = pgTable("setting", {
   id: text("id")
@@ -130,3 +118,59 @@ export const authenticators = pgTable(
     }),
   ]
 )
+
+export const datasets = pgTable("dataset", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  price: integer("price").notNull().default(0),
+  category: text("category").notNull(),
+  fileUrl: text("file_url").notNull(),
+  vendorId: text("vendorId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  status: datasetStatusEnum("status").default("PENDING").notNull(),
+  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow().notNull(),
+})
+
+export const purchases = pgTable("purchase", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  datasetId: text("datasetId")
+    .notNull()
+    .references(() => datasets.id, { onDelete: "cascade" }),
+  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+})
+
+export const reviews = pgTable("review", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  datasetId: text("datasetId")
+    .notNull()
+    .references(() => datasets.id, { onDelete: "cascade" }),
+  rating: integer("rating").notNull(),
+  comment: text("comment").notNull(),
+  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+})
+
+export const usersRelations = relations(users, ({ many }) => ({
+  datasets: many(datasets),
+}))
+
+export const datasetsRelations = relations(datasets, ({ one }) => ({
+  vendor: one(users, {
+    fields: [datasets.vendorId],
+    references: [users.id],
+  }),
+}))

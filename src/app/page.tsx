@@ -22,9 +22,9 @@ export default function Home() {
           The Premier Marketplace for High-Quality Datasets
         </h1>
 
-        <p className="text-xl text-center text-zinc-600 dark:text-zinc-400 max-w-2xl">
+        <h2 className="text-xl text-center text-zinc-600 dark:text-zinc-400 max-w-2xl font-normal">
           Empower your AI models and analytics with curated datasets from top vendors. Buy securely, sell easily, and scale your data needs.
-        </p>
+        </h2>
 
         <div className="flex gap-4 items-center justify-center mt-4">
           <Button asChild size="lg" className="px-8">

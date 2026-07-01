@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { settings } from "@/db/schema";
+
 import { updateSeoSettings } from "../actions";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";

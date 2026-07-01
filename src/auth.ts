@@ -22,6 +22,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (credentials?.email === "test@example.com" && credentials?.password === "password") {
           return { id: "1", name: "Test User", email: "test@example.com", role: "Admin" }
         }
+        if (credentials?.email === "vendor@example.com" && credentials?.password === "password") {
+          return { id: "2", name: "Vendor User", email: "vendor@example.com", role: "Vendor" }
+        }
         return null
       }
     })

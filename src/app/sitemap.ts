@@ -3,16 +3,24 @@ import { db } from '@/db';
 import { datasets } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const approvedDatasets = await db
-    .select()
-    .from(datasets)
-    .where(eq(datasets.status, 'APPROVED'));
+export const dynamic = 'force-dynamic';
 
-  const datasetUrls = approvedDatasets.map((dataset) => ({
-    url: `https://datamart.com/dataset/${dataset.id}`,
-    lastModified: dataset.updatedAt,
-  }));
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  let datasetUrls: { url: string; lastModified: Date }[] = [];
+
+  try {
+    const approvedDatasets = await db
+      .select()
+      .from(datasets)
+      .where(eq(datasets.status, 'APPROVED'));
+
+    datasetUrls = approvedDatasets.map((dataset) => ({
+      url: `https://datamart.com/dataset/${dataset.id}`,
+      lastModified: dataset.updatedAt,
+    }));
+  } catch (error) {
+    console.warn('Failed to fetch datasets for sitemap during build:', error);
+  }
 
   return [
     {

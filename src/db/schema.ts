@@ -10,6 +10,8 @@ import type { AdapterAccountType } from "next-auth/adapters"
 
 export const roleEnum = pgEnum("role", ["Buyer", "Vendor", "Admin"])
 export const datasetStatusEnum = pgEnum("dataset_status", ["PENDING", "APPROVED", "REJECTED"])
+export const payoutMethodEnum = pgEnum("payout_method", ["Bank", "PayPal", "Binance Pay"])
+export const withdrawalStatusEnum = pgEnum("withdrawal_status", ["PENDING", "PAID", "REJECTED"])
 
 export const users = pgTable("user", {
   id: text("id")
@@ -20,6 +22,23 @@ export const users = pgTable("user", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   role: roleEnum("role").default("Buyer").notNull(),
+  availableBalance: integer("available_balance").default(0).notNull(),
+  totalEarnings: integer("total_earnings").default(0).notNull(),
+})
+
+export const withdrawalRequests = pgTable("withdrawal_request", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  vendorId: text("vendorId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  amount: integer("amount").notNull(),
+  payoutMethod: payoutMethodEnum("payout_method").notNull(),
+  payoutDetails: text("payout_details").notNull(), // JSON stringified details
+  status: withdrawalStatusEnum("status").default("PENDING").notNull(),
+  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow().notNull(),
 })
 
 export const accounts = pgTable(
